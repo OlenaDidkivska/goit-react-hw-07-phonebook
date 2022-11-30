@@ -1,5 +1,5 @@
 import { FilterField, FilterLabel, FilterInput } from './Filter.styled';
-import PropTypes from 'prop-types';
+
 import { useDispatch } from 'react-redux';
 import { filterContacts } from 'redux/filterSlice.';
 
@@ -21,8 +21,3 @@ const Filter = () => {
 };
 
 export default Filter;
-
-Filter.prototype = {
-  value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-};

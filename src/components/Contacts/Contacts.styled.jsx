@@ -19,7 +19,7 @@ export const ContactNumber = styled.a`
 
 export const FilterButton = styled.button`
   margin-left: auto;
-  width: 100px;
+  width: 70px;
   height: 25px;
   border-radius: 4px;
   border: transparent;

@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
-import PropTypes from 'prop-types';
+import { addContact } from 'redux/operations';
+
 import { nanoid } from 'nanoid';
 import {
   Field,
@@ -11,14 +11,14 @@ import {
   ErrorText,
   Form,
 } from './Form.styled';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const nameId = nanoid();
 const numberId = nanoid();
 
 export const ContactForm = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const {
@@ -37,7 +37,7 @@ export const ContactForm = () => {
   const formSubmitHandler = newContact => {
     const normalizedName = newContact.name.toLowerCase();
 
-    const checkNewContact = contacts.some(
+    const checkNewContact = contacts.items?.some(
       contact => contact.name.toLowerCase() === normalizedName
     );
 
@@ -48,14 +48,14 @@ export const ContactForm = () => {
 
       Notify.success('Contact successfully added');
     }
+    resetField('name');
+    resetField('number');
   };
 
   return (
     <Form
       onSubmit={handleSubmit(newContact => {
         formSubmitHandler(newContact);
-        resetField('name');
-        resetField('number');
       })}
     >
       <FormField>
@@ -97,8 +97,4 @@ export const ContactForm = () => {
       <FormButton type="submit">Add contact</FormButton>
     </Form>
   );
-};
-
-ContactForm.prototype = {
-  onSubmit: PropTypes.string.isRequired,
 };

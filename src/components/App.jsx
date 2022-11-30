@@ -3,22 +3,38 @@ import { ContactForm } from './Form/Form';
 import Filter from './Filter/Filter';
 
 import { ContactsMassage, PhonebookContainer } from './App.styled';
-import { useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectContacts, selectError, selectIsLoading } from 'redux/selectors';
+import { useEffect } from 'react';
+import { fetchContacts } from 'redux/operations';
+import Loader from './Loader/Loader';
 
 export default function App() {
-  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
+  const error = useSelector(selectError);
+  const isLoading = useSelector(selectIsLoading);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <PhonebookContainer>
       <h1>Phonebook</h1>
       <ContactForm />
       <h2>Contacts</h2>
+
+      {isLoading && <Loader />}
+
       {contacts?.length > 0 ? (
-        <>
-          <Filter />
-          <Contacts />
-        </>
+        !error &&
+        !isLoading && (
+          <>
+            <Filter />
+            <Contacts />
+          </>
+        )
       ) : (
         <ContactsMassage>
           Your phonebook is empty, add your first contact

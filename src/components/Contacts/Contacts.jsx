@@ -1,20 +1,13 @@
 import { ContactItem, ContactNumber, FilterButton } from './Contacts.styled';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts, getFilter } from 'redux/selectors';
-import { deleteContact } from 'redux/contactsSlice';
+import { selectVisibleContacts } from 'redux/selectors';
+import { deleteContact } from 'redux/operations';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 export const Contacts = () => {
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
   const dispatch = useDispatch();
 
-  console.log(filter);
-
-  const visibleContacts = contacts?.filter(contact => {
-    return contact.name.toLowerCase().includes(filter.toLowerCase());
-  });
+  const contacts = useSelector(selectVisibleContacts);
 
   const deleteContactHandler = id => {
     dispatch(deleteContact(id));
@@ -23,7 +16,7 @@ export const Contacts = () => {
 
   return (
     <ul>
-      {visibleContacts?.map(contact => {
+      {contacts?.map(contact => {
         return (
           <ContactItem key={contact.id}>
             {contact.name}:{' '}
@@ -41,11 +34,4 @@ export const Contacts = () => {
       })}
     </ul>
   );
-};
-
-Contacts.prototype = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  number: PropTypes.number.isRequired,
-  onDelete: PropTypes.func.isRequired,
 };
