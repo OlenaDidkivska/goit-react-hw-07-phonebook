@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const PhonebookContainer = styled.div`
     margin: 50px auto;
-    width: 400px;
+    width: 420px;
     min-height: min-content;
     background-color: #ecf9fa;
     padding: 20px;
