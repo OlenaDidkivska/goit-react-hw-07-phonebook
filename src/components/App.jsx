@@ -24,12 +24,9 @@ export default function App() {
       <h1>Phonebook</h1>
       <ContactForm />
       <h2>Contacts</h2>
-
       {isLoading && <Loader />}
-
       {contacts?.length > 0 ? (
-        !error &&
-        !isLoading && (
+        !error && (
           <>
             <Filter />
             <Contacts />

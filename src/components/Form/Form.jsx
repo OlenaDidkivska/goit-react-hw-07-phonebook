@@ -37,16 +37,22 @@ export const ContactForm = () => {
   const formSubmitHandler = newContact => {
     const normalizedName = newContact.name.toLowerCase();
 
-    const checkNewContact = contacts.items?.some(
+    const checkNewContact = contacts?.some(
       contact => contact.name.toLowerCase() === normalizedName
     );
 
     if (checkNewContact) {
-      Notify.info(`${newContact.name} is already in contacts`);
+      Notify.info(`${newContact.name} is already in contacts`, {
+        cssAnimationStyle: 'from-top',
+        position: 'center-center',
+      });
     } else {
       dispatch(addContact(newContact));
 
-      Notify.success('Contact successfully added');
+      Notify.success(`${newContact.name} successfully added`, {
+        cssAnimationStyle: 'from-top',
+        position: 'center-top',
+      });
     }
     resetField('name');
     resetField('number');

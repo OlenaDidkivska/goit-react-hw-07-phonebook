@@ -11,7 +11,10 @@ export const Contacts = () => {
 
   const deleteContactHandler = id => {
     dispatch(deleteContact(id));
-    Notify.info('Сontact deleted successfully');
+    Notify.info('Сontact deleted successfully', {
+      cssAnimationStyle: 'from-top',
+      position: 'center-top',
+    });
   };
 
   return (
